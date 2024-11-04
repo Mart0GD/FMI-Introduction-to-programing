@@ -122,6 +122,8 @@ int main1()
 
 	//Positive triangle (right one)
 
+	pointX = pointX < 0 ? -pointX : pointX;
+
 	double PointToADistance = sqrt(pow(triangleOneAx - pointX, 2) + pow(triangleOneAy - pointY, 2));
 	double PointToBDistance = sqrt(pow(triangleOneBx - pointX, 2) + pow(triangleOneBy - pointY, 2));
 	double PointToCDistance = sqrt(pow(triangleOneCx - pointX, 2) + pow(triangleOneCy - pointY, 2));
@@ -150,39 +152,7 @@ int main1()
 			(trianglePCBSemiPerimeter - PointToBDistance) *
 			(trianglePCBSemiPerimeter - triangleCB));
 
-	double sumOfAreasOne = trianglePABArea + trianglePACArea + trianglePCBArea;
-
-	// Nevative triangle (left one)
-
-		double PointToA1Distance = sqrt(pow(triangleTwoAx - pointX, 2) + pow(triangleTwoAy - pointY, 2));
-		double PointToB1Distance = sqrt(pow(triangleTwoBx - pointX, 2) + pow(triangleTwoBy - pointY, 2));
-		double PointToC1Distance = sqrt(pow(triangleTwoCx - pointX, 2) + pow(triangleTwoCy - pointY, 2));
-
-		//PA1C1
-		double trianglePA1C1SemiPerimeter = (PointToA1Distance + triangleCA + PointToC1Distance) / 2;
-		double trianglePA1C1Area =
-			sqrt(trianglePA1C1SemiPerimeter *
-				(trianglePA1C1SemiPerimeter - PointToC1Distance) *
-				(trianglePA1C1SemiPerimeter - PointToA1Distance) *
-				(trianglePA1C1SemiPerimeter - triangleCA));
-
-		//PA1B1
-		double trianglePA1B1SemiPerimeter = (PointToA1Distance + PointToB1Distance + triangleAB) / 2;
-		double trianglePA1B1Area =
-			sqrt(trianglePA1B1SemiPerimeter *
-				(trianglePA1B1SemiPerimeter - PointToA1Distance) *
-				(trianglePA1B1SemiPerimeter - PointToB1Distance) *
-				(trianglePA1B1SemiPerimeter - triangleAB));
-
-		//PC1B1
-		double trianglePC1B1SemiPerimeter = (PointToC1Distance + PointToB1Distance + triangleCB) / 2;
-		double trianglePC1B1Area =
-			sqrt(trianglePC1B1SemiPerimeter *
-				(trianglePC1B1SemiPerimeter - PointToC1Distance) *
-				(trianglePC1B1SemiPerimeter - PointToB1Distance) *
-				(trianglePC1B1SemiPerimeter - triangleCB));
-
-		double sumOfAreasTwo = trianglePA1B1Area + trianglePA1C1Area + trianglePC1B1Area;
+	double sumOfAreas = trianglePABArea + trianglePACArea + trianglePCBArea;
 
 	#pragma endregion
 
@@ -208,18 +178,17 @@ int main1()
 	{
 		puts("brown");
 	}
-	else if (
-			 ((pointXToBlueDistance <= blueRectWidth / 2 || fabs(pointXToBlueDistance - blueRectWidth / 2) <= Epsilon)   &&
-			 (pointYToBlueDistance <= blueRectHeight / 2 || fabs(pointYToBlueDistance - blueRectHeight / 2) <= Epsilon)) ||
-			 (fabs(sumOfAreasOne - triangleArea) <= Epsilon) ||
-			 (fabs(sumOfAreasTwo - triangleArea) <= Epsilon)
-			)
-	{
-		puts("blue");
-	}
 	else if( distanceToYellowCircle <= yellowCircleRadius && distanceToTransperantCircle > transparentCircleRadius)
 	{
 		puts("yellow");
+	}
+	else if (
+		((pointXToBlueDistance <= blueRectWidth / 2 || fabs(pointXToBlueDistance - blueRectWidth / 2) <= Epsilon) &&
+		(pointYToBlueDistance <= blueRectHeight / 2 || fabs(pointYToBlueDistance - blueRectHeight / 2) <= Epsilon)) ||
+		(fabs(sumOfAreas - triangleArea) <= Epsilon)
+		)
+	{
+		puts("blue");
 	}
 	else
 	{

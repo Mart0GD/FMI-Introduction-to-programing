@@ -14,6 +14,7 @@ int main2()
 	int largestDiffrence = 0;
 	if (number < 10){
 		puts("no diffrence can be calculated in a single digit number!");
+		return 1;
 	}
 	else if (number < 100)
 	{

@@ -16,7 +16,7 @@
 
 Едно число е палиндром, ако то е симетрично.
 */
-int main()
+int main8()
 {
 	int number;
 	scanf_s("%d", &number);

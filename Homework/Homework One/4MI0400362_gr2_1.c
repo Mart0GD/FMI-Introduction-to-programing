@@ -1,50 +1,19 @@
 #include<stdio.h>
 #include<math.h>
 
-int main1()
-{
-	#pragma region Const values
-
-	const double Epsilon = 0.01;
-
-	//Rectangles
+int main() {
 	
-	//cyan 
-	const double cyanRectMiddlePointX = 0.70;
-	const double cyanRectMiddlePointY = 0.65;
+	const double Epsilon = 1E-9;
 
-	const double cyanRectWidth = 0.4;
-	const double cyanRectHeight = 0.3;
+	const double triangleASideX = 1.6;
+	const double triangleASideY = 1;
 
-	// gery
-	const double greyRectMiddlePointX = 0;
-	const double greyRectMiddlePointY = 0.50;
+	const double triangleBSideX = 1;
+	const double triangleBSideY = 2;
 
-	const double greyRectWidth = 2;
-	const double greyRectHeight = 1;
+	const double triangleCSideX = 1;
+	const double triangleCSideY = 1;
 
-	//green
-	const double greenRectMiddlePointX = -0.75;
-	const double greenRectMiddlePointY = 0.40;
-
-	const double greenRectWidth = 0.30;
-	const double greenRectHeight = 0.80;
-
-	//brown
-	const double brownRectMiddlePointX = 0.70;
-	const double brownRectMiddlePointY = 2.15;
-
-	const double brownRectWidth = 0.20;
-	const double brownRectHeight = 0.30;
-
-	//blue
-	const double blueRectMiddlePointX = 0;
-	const double blueRectMiddlePointY = 1.5;
-
-	const double blueRectWidth = 2;
-	const double blueRectHeight = 1;
-
-	//Circles
 	const double yellowCircleCenterX = -0.5;
 	const double yellowCircleCenterY = 2.5;
 	const double yellowCircleRadius = 0.4;
@@ -53,148 +22,131 @@ int main1()
 	const double transparentCircleCenterY = 2.8;
 	const double transparentCircleRadius = 0.7;
 
-	//Triangles 
-	const double triangleOneAx = 1.6;
-	const double triangleOneAy = 1;
-						 
-	const double triangleOneBx = 1;
-	const double triangleOneBy = 2;
-						 
-	const double triangleOneCx = 1;
-	const double triangleOneCy = 1;
-
-	const double triangleTwoAx = -1.6;
-	const double triangleTwoAy = 1;
-						 
-	const double triangleTwoBx = -1;
-	const double triangleTwoBy = 2;
-						 
-	const double triangleTwoCx = -1;
-	const double triangleTwoCy = 1;
-
-
-	//TO DO add the blue triangles and yellow 1/4 circle
-#pragma endregion
-
 	double pointX, pointY;
 
 	puts("Please insert (x,y) coordinates:");
 	int result = scanf_s("%lf %lf", &pointX, &pointY);
 
-	if (result != 2)
-	{
+	if (result != 2){
 		puts("invalid input!");
 		return 1;
 	}
-
-	#pragma region Main logic
-
-	//rectangles
-	double pointXToCyanDistance = fabs(pointX - cyanRectMiddlePointX);
-	double pointYToCyanDistance = fabs(pointY - cyanRectMiddlePointY);
-
-	double pointXToGreyDistance = fabs(pointX - greyRectMiddlePointX);
-	double pointYToGreyDistance = fabs(pointY - greyRectMiddlePointY);
-
-	double pointXToGreenDistance = fabs(pointX - greenRectMiddlePointX);
-	double pointYToGreenDistance = fabs(pointY - greenRectMiddlePointY);
-
-	double pointXToBrownDistance = fabs(pointX - brownRectMiddlePointX);
-	double pointYToBrownDistance = fabs(pointY - brownRectMiddlePointY);
-
-	double pointXToBlueDistance = fabs(pointX - blueRectMiddlePointX);
-	double pointYToBlueDistance = fabs(pointY - blueRectMiddlePointY);
-
-	//circles
-	double distanceToYellowCircle = sqrt(pow(pointX - yellowCircleCenterX, 2) + pow(pointY - yellowCircleCenterY, 2));
-	double distanceToTransperantCircle = sqrt(pow(pointX - transparentCircleCenterX, 2) + pow(pointY - transparentCircleCenterY, 2));
-
-	#pragma endregion
-
-	#pragma region Triangles Logic
-
-	// Main triangle
-	double triangleCA = sqrt(pow(triangleOneAx - triangleOneCx, 2) + pow(triangleOneAy - triangleOneCy, 2));
-	double triangleCB = sqrt(pow(triangleOneBx - triangleOneCx, 2) + pow(triangleOneBy - triangleOneCy, 2));
-	double triangleAB = sqrt(pow(triangleOneBx - triangleOneAx, 2) + pow(triangleOneBy - triangleOneAy, 2));
-
-	double triangleArea = (triangleCA * triangleCB) / 2;
-
-	//Positive triangle (right one)
-
-	pointX = pointX < 0 ? -pointX : pointX;
-
-	double PointToADistance = sqrt(pow(triangleOneAx - pointX, 2) + pow(triangleOneAy - pointY, 2));
-	double PointToBDistance = sqrt(pow(triangleOneBx - pointX, 2) + pow(triangleOneBy - pointY, 2));
-	double PointToCDistance = sqrt(pow(triangleOneCx - pointX, 2) + pow(triangleOneCy - pointY, 2));
-
-	//PAC
-	double trianglePACSemiPerimeter = (PointToADistance + triangleCA + PointToCDistance) / 2;
-	double trianglePACArea =
-		sqrt(trianglePACSemiPerimeter *
-			(trianglePACSemiPerimeter - PointToCDistance) *
-			(trianglePACSemiPerimeter - PointToADistance) *
-			(trianglePACSemiPerimeter - triangleCA));
-
-	//PAB
-	double trianglePABSemiPerimeter = (PointToADistance + PointToBDistance + triangleAB) / 2;
-	double trianglePABArea =
-		sqrt(trianglePABSemiPerimeter *
-			(trianglePABSemiPerimeter - PointToADistance) *
-			(trianglePABSemiPerimeter - PointToBDistance) *
-			(trianglePABSemiPerimeter - triangleAB));
-
-	//PCB
-	double trianglePCBSemiPerimeter = (PointToCDistance + PointToBDistance + triangleCB) / 2;
-	double trianglePCBArea =
-		sqrt(trianglePCBSemiPerimeter *
-			(trianglePCBSemiPerimeter - PointToCDistance) *
-			(trianglePCBSemiPerimeter - PointToBDistance) *
-			(trianglePCBSemiPerimeter - triangleCB));
-
-	double sumOfAreas = trianglePABArea + trianglePACArea + trianglePCBArea;
-
-	#pragma endregion
-
-	#pragma region Logical operations
-
-	if ((pointXToCyanDistance <= cyanRectWidth / 2 || fabs(pointXToCyanDistance - cyanRectWidth / 2) <= Epsilon) &&
-		(pointYToCyanDistance <= cyanRectHeight / 2 || fabs(pointYToCyanDistance - cyanRectHeight / 2) <= Epsilon))
-	{
-		puts("cyan");
-	}
-	else if ((pointXToGreenDistance <= greenRectWidth / 2 || fabs(pointXToGreenDistance - greenRectWidth / 2) <= Epsilon) &&
-		(pointYToGreenDistance <= greenRectHeight / 2 || fabs(pointYToGreenDistance - greenRectHeight / 2) <= Epsilon))
-	{
-		puts("green");
-	}
-	else if ((pointXToGreyDistance <= greyRectWidth / 2 || fabs(pointXToGreyDistance - greyRectWidth / 2) <= Epsilon) &&
-			 (pointYToGreyDistance <= greyRectHeight / 2 || fabs(pointYToGreyDistance - greyRectHeight / 2) <= Epsilon))
-	{
-		puts("grey");
-	}
-	else if ((pointXToBrownDistance <= brownRectWidth / 2 || fabs(pointXToBrownDistance - brownRectWidth / 2) <= Epsilon) &&
-			 (pointYToBrownDistance <= brownRectHeight / 2 || fabs(pointYToBrownDistance - brownRectHeight / 2) <= Epsilon))
-	{
-		puts("brown");
-	}
-	else if( distanceToYellowCircle <= yellowCircleRadius && distanceToTransperantCircle > transparentCircleRadius)
-	{
-		puts("yellow");
-	}
-	else if (
-		((pointXToBlueDistance <= blueRectWidth / 2 || fabs(pointXToBlueDistance - blueRectWidth / 2) <= Epsilon) &&
-		(pointYToBlueDistance <= blueRectHeight / 2 || fabs(pointYToBlueDistance - blueRectHeight / 2) <= Epsilon)) ||
-		(fabs(sumOfAreas - triangleArea) <= Epsilon)
-		)
-	{
-		puts("blue");
-	}
-	else
-	{
+	else if (pointY < 0 || pointX < -1.6 || pointX > 1.6){
 		puts("Point matches no color!");
+		return 0;
 	}
-	#pragma endregion
 
-	return 0;
+	int color = 0;
+	if ((pointX >= -1 && pointY >= 0) && (pointX <= 1 && pointY <= 1)) // inside grey
+	{
+		int insideCyan = (pointX <= 0.9 && pointY <= 0.8) && (pointX >= 0.5 && pointY >= 0.5);
+		int insideGreen = (pointX <= -0.6 && pointY <= 0.8) && (pointX > -0.9 && pointY >= 0);
+
+		if (insideCyan)
+		{
+			color = 5; //cyan
+		}
+		else if (insideGreen)
+		{
+			color = 3; //green
+		}
+		else
+		{
+			color = 4; // grey
+		}
+
+	}
+	else if ((pointX >= -1.6 && pointY >= 1) && (pointX <= 1.6 && pointY <= 2)) // inside blue
+	{
+		#pragma region Triangle logic
+
+		// Main triangle
+		double triangleCA = sqrt(pow(triangleASideX - triangleCSideX, 2) + pow(triangleASideY - triangleCSideY, 2));
+		double triangleCB = sqrt(pow(triangleBSideX - triangleCSideX, 2) + pow(triangleBSideY - triangleCSideY, 2));
+		double triangleAB = sqrt(pow(triangleBSideX - triangleASideX, 2) + pow(triangleBSideY - triangleASideY, 2));
+
+		double triangleArea = (triangleCA * triangleCB) / 2;
+
+		//Positive triangle (right one)
+
+		double pointXTemp = pointX < 0 ? -pointX : pointX;
+
+		double PointToADistance = sqrt(pow(triangleASideX - pointXTemp, 2) + pow(triangleASideY - pointY, 2));
+		double PointToBDistance = sqrt(pow(triangleBSideX - pointXTemp, 2) + pow(triangleBSideY - pointY, 2));
+		double PointToCDistance = sqrt(pow(triangleCSideX - pointXTemp, 2) + pow(triangleCSideY - pointY, 2));
+
+		//PAC
+		double trianglePACSemiPerimeter = (PointToADistance + triangleCA + PointToCDistance) / 2;
+		double trianglePACArea =
+			sqrt(trianglePACSemiPerimeter *
+				(trianglePACSemiPerimeter - PointToCDistance) *
+				(trianglePACSemiPerimeter - PointToADistance) *
+				(trianglePACSemiPerimeter - triangleCA));
+
+		//PAB
+		double trianglePABSemiPerimeter = (PointToADistance + PointToBDistance + triangleAB) / 2;
+		double trianglePABArea =
+			sqrt(trianglePABSemiPerimeter *
+				(trianglePABSemiPerimeter - PointToADistance) *
+				(trianglePABSemiPerimeter - PointToBDistance) *
+				(trianglePABSemiPerimeter - triangleAB));
+
+		//PCB
+		double trianglePCBSemiPerimeter = (PointToCDistance + PointToBDistance + triangleCB) / 2;
+		double trianglePCBArea =
+			sqrt(trianglePCBSemiPerimeter *
+				(trianglePCBSemiPerimeter - PointToCDistance) *
+				(trianglePCBSemiPerimeter - PointToBDistance) *
+				(trianglePCBSemiPerimeter - triangleCB));
+
+		double sumOfSmallAreas = trianglePABArea + trianglePACArea + trianglePCBArea;
+
+		#pragma endregion
+
+		int insideTriangle = fabs(triangleArea - sumOfSmallAreas) <= Epsilon;
+
+		if (insideTriangle || (pointX > -1 && pointX < 1))
+		{
+			color = 1; // blue
+		}
+	}
+	else if ((pointX >= 0.6 && pointY >= 2.0) && (pointX <= 0.8 && pointY <= 2.3)) { color = 2; }
+	else 
+	{
+		double distanceToYellowCircle = sqrt(((pointX - yellowCircleCenterX) * (pointX - yellowCircleCenterX)) + 
+											  (pointY - yellowCircleCenterY) * (pointY - yellowCircleCenterY));
+
+		double distanceToTransperantCircle = sqrt((pointX - transparentCircleCenterX) * (pointX - transparentCircleCenterX) + 
+												  (pointY - transparentCircleCenterY) * (pointY - transparentCircleCenterY));
+
+		if (distanceToYellowCircle <= yellowCircleRadius && distanceToTransperantCircle > transparentCircleRadius)
+		{
+			color = 6; // yellow
+		}
+	}
+
+	switch (color)
+	{
+		case 1:
+			puts("Blue");
+			break;
+		case 2:
+			puts("Brown");
+			break;
+		case 3:
+			puts("Green");
+			break;
+		case 4:
+			puts("Grey");
+			break;
+		case 5:
+			puts("Cyan");
+			break;
+		case 6:
+			puts("Yellow");
+			break;
+		default:
+			puts("Point matches no color!");
+			break;
+	}
 }

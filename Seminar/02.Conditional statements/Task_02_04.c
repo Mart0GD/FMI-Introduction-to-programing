@@ -5,7 +5,7 @@
 Вход: 1 5 1 0 3, Изход: no
 Вход: -10 10 -2 11 -22, Изход: yes
 */
-int main02_04()
+int main_02_04()
 {
 	// arrays required
 	return 0;

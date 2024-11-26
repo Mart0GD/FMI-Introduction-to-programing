@@ -6,7 +6,7 @@
 Âõîä: 0 1, Èçõîä: 00:16
 Âõîä: 23 59, Èçõîä: 00:14
 */
-int main02_02()
+int main_02_02()
 {
 	int hours;
 	int minutes;
@@ -19,5 +19,5 @@ int main02_02()
 	hours > 9 ? printf("%d:", hours) : printf("0%d:", hours);
 	minutes > 9 ? printf("%d", minutes) : printf("0%d", minutes);
 
-	return;
+	return 0 ;
 }

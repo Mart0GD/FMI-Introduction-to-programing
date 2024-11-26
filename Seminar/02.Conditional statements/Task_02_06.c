@@ -6,7 +6,7 @@
 Вход: 250, Изход: Invalid day!
 */
 
-int main02_06()
+int main_02_06()
 {
 	int dayOfTheWeek;
 	scanf_s("%d", &dayOfTheWeek);

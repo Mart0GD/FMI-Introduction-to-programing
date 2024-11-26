@@ -6,7 +6,7 @@
 Вход: 10 3 /, Изход: 3.33333
 Вход: 5 23 $, Изход: Invalid operation!
 */
-int main02_07()
+int main_02_07()
 {
 	double num1, num2;
 	char operation;

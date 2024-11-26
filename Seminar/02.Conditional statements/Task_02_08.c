@@ -8,7 +8,7 @@
 Вход: 123, Изход: 121
 Вход: 718, Изход: 712
 */
-int main()
+int main_02_08()
 {
 	int number;
 	scanf_s("%d", &number);

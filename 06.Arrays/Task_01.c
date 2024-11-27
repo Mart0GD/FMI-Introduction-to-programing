@@ -22,7 +22,7 @@ int main_01()
 {
 	#define ARR_LENGTH 128
 
-	short n;
+	unsigned short n;
 	int arr[ARR_LENGTH] = { 0 };
 	scanf_s("%hu", &n);
 

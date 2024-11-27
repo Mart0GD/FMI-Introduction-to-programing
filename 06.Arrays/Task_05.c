@@ -16,9 +16,9 @@ void fillArray_05(int arr[], int arrLength)
 
 int main_05()
 {
-	int n;
+	unsigned short n;
 	unsigned int arr[ARR_LENGTH];
-	scanf_s("%d", &n);
+	scanf_s("%hu", &n);
 	fillArray_05(arr, n);
 
 	int isSequenceSaw = 1;

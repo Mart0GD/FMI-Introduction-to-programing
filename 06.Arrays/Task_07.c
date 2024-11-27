@@ -34,9 +34,9 @@ int CheckZeroSumSequence(int arr[], int arrLength)
 
 int main_07()
 {
-	int n;
+	unsigned short n;
 	int arr[ARR_LENGTH];
-	scanf_s("%d", &n);
+	scanf_s("%hu", &n);
 
 	FillArray_07(arr, n);
 	printf("Does array have undersequence equal to zero - %d", CheckZeroSumSequence(arr, n));

@@ -14,9 +14,9 @@ void fillArray_06(int arr[], int arrLength)
 
 int main_06()
 {
-	int n = 0;
+	unsigned short n = 0;
 	int arr[ARR_LENGTH];
-	scanf_s("%d", &n);
+	scanf_s("%hu", &n);
 	fillArray_06(arr, n);
 	 
 	double sum = 0;

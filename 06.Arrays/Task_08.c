@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<limits.h>
 #define ARR_LENGTH 128
 /*
 Напишете програма, която прочита от конзолата цяло неторицателно число n (<= 128), след което прочита n цели числа, запазва ги в масив и намира началото и дължината на най-дългата растяща подредица.
@@ -12,10 +13,10 @@ void FillArray_08(int arr[], int arrLength)
 	}
 }
 
-int GetMaxPositiveSequenceStartIndex(int arr[], int arrLength)
+int PrintMaxPositiveSequenceStartIndex(const int arr[], int arrLength)
 {
-	int maxSequenceLength;
-	int maxSequenceStartIndex; 
+	int maxSequenceLength = INT_MIN;
+	int maxSequenceStartIndex = 0; 
 
 	int currentSequenceLength = 0;
 	for (int i = 0; i < arrLength; i++)
@@ -28,17 +29,27 @@ int GetMaxPositiveSequenceStartIndex(int arr[], int arrLength)
 			else
 				break;
 		}
+
+		if (currentSequenceLength > maxSequenceLength)
+		{
+			maxSequenceLength = currentSequenceLength;
+			maxSequenceStartIndex = i;
+		}
 	}
+
+	printf("Max sequence length -> %d\n", maxSequenceLength);
+	printf("Max sequence start index -> %d", maxSequenceStartIndex);
+
 	return 0;
 }
 
 int main_08()
 {
-	int n;
+	unsigned short n;
 	int arr[ARR_LENGTH];
-	scanf_s("%d", &n);
+	scanf_s("%hu", &n);
 	FillArray_08(arr, n);
 
-	int maxSequenceIndex = GetMaxPositiveSequenceStartIndex(arr, n);
+	int maxSequenceIndex = PrintMaxPositiveSequenceStartIndex(arr, n);
 	return 0;
 }

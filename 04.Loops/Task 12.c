@@ -3,15 +3,27 @@
 #include<math.h>
 
 //Напишете програма, която прочита число в двоичен вид от конзолата и го превръща в десетична бройна система.
-int main12()
+int main_12()
 {
-    char number[17]; 
-    fgets(number, sizeof(number), stdin); // tazi zadacha ne e za sega PRETURSIH VSICHKO NE MOJE BEZ STRINGGGGGG
+    long long number; 
+    scanf_s("%lld", &number);
 
     int decimal = 0;
-    for (int i = 0; i < strlen(number); i++)
+    int step = 0;
+    int currentDigit = 0;
+    while (number != 0)
     {
-        decimal += ((int)number[i] - '0') * pow(2 , i);
+        currentDigit = (number % 10);
+        if (currentDigit != 0 || currentDigit != 1)
+        {
+            puts("Not a binary number!");
+            return 0;
+        }
+
+        decimal +=  currentDigit * pow(2, step);
+        number /= 10;
+
+        step++;
     }
     
     printf("decimal -> %d", decimal);

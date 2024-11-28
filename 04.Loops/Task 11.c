@@ -18,7 +18,7 @@
 { 2 3 }
 { 1 2 3 }
 */
-int main()
+int main_11()
 {
 	int n;
 	scanf_s("%d", &n);

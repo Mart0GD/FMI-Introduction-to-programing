@@ -1,7 +1,10 @@
 #include<stdio.h>
 #include<math.h>
 
-int main10()
+/*
+Ќапишете програма, ко€то прочита ц€ло число и принтира бинарната му репрезентаци€ (от най-старши€т към най-млади€т бит). Ќедейте да принтирате водещите 0 (тоест за 5 не принтирайте "00000000000000000000000000000101", а принтирайте "101").
+*/
+int main_10()
 {
 	const int intSize = (sizeof(int) * 8) - 1;
 
@@ -18,8 +21,6 @@ int main10()
 	
 	for (int i = mostSignifficantBitPlace; i > 0; i--)
 	{
-		number <<= (intSize - i);
-		number >>= (intSize - i);
 		printf("%d", (number >> (i == 0 ? 0 : i - 1)) & 1);
 	}
 

@@ -16,14 +16,14 @@
 
 Едно число е палиндром, ако то е симетрично.
 */
-int main8()
+int main_8()
 {
 	int number;
 	scanf_s("%d", &number);
 
 	int digit = 0;
 	int sumOfDigits = 0;
-	int palindome = 0;
+	int reversed = 0;
 	int digitsCount = 0;
 	int numberTemp = number;
 
@@ -32,14 +32,14 @@ int main8()
 		digit = numberTemp % 10;
 		numberTemp /= 10;
 
-		palindome += digit;
-		if (numberTemp != 0) { palindome *= 10; }
+		reversed *= 10;
+		reversed += digit;
 
 		sumOfDigits += digit;
 		digitsCount++;
 	}
 
-	printf("Reversed -> %d\n", palindome);
+	printf("Reversed -> %d\n", reversed);
 	printf("Sum of digits -> %d\n", sumOfDigits);
 
 	int narcissisticNumber = 0;
@@ -53,5 +53,5 @@ int main8()
 	}
 
 	printf("Is number narcissistic -> %d\n", narcissisticNumber == number);
-	printf("Is number Palindrome -> %d\n", palindome == number);
+	printf("Is number Palindrome -> %d\n", reversed == number);
 }

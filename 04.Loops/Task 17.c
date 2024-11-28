@@ -1,7 +1,8 @@
 #include<stdio.h>
 #include<math.h>
 
-int main()
+//Напишете програма, която прочита 2 числа от конзолата и проверява дали 2рото се съдържа в първото.
+int main_17()
 {
 	int numberOne, numberTwo;
 	scanf_s("%d %d", &numberOne, &numberTwo);

@@ -3,7 +3,7 @@
 /*
 Ќапишете програма, ко€то прочита от конзолата ц€ло положително число a и принтира/рисува на конзолата квадрат с големина на страните a.
 */
-int main13()
+int main_13()
 {
 	unsigned int n;
 	scanf_s("%u", &n);
@@ -19,16 +19,16 @@ int main13()
 		return 0;
 	}
 
-	for (int i = 0; i < n; i++)
+	for (int x = 0; x < n; x++)
 	{
-		for (int j = 0; j < n; j++)
+		for (int y = 0; y < n; y++)
 		{
-			if (i == 0 || i == n - 1)
+			if (x == 0 || x == n - 1)
 			{
 				printf("#");
 				continue;
 			}
-			else if (j == 0 || j == n - 1)
+			else if (y == 0 || y == n - 1)
 			{
 				printf("#");
 			}

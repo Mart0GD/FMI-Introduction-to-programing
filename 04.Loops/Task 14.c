@@ -1,7 +1,10 @@
 #include<stdio.h>
 #include<math.h>
 
-int main14()
+/*
+Напишете програма, която прочита цяло положително число n и принтира/рисува на конзолата диамант (диамантът има 2*n-1 реда). Рисувайте диамантът използвайки '*', като всеки ред има нечетен брой '*' и е коректно центриран спрямо другите редове.
+*/
+int main_14()
 {
 	int n;
 	scanf_s("%d", &n);
@@ -9,7 +12,7 @@ int main14()
 	int rows = (2 * n) - 1;
 	int step = 0;
 	int beginningCell = ceil(rows / 2);
-	int middleRow = beginningCell; // suchtata smetka
+	int middleRow = beginningCell; 
 	int modifier = 1;
 
 	for (int i = 0; i < rows; i++)

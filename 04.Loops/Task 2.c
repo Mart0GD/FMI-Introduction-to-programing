@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int main2()
+int main_2()
 {
 	const int asciiLength = 128;
 

@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int main4()
+int main_4()
 {
 	int n;
 	scanf_s("%d", &n);

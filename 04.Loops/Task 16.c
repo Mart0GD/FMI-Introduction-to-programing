@@ -34,7 +34,7 @@ int subtract(int num1, int num2)
 	return num1;
 }
 
-int main()
+int main_16()
 {
 	int numberOne, numberTwo;
 	scanf_s("%d %d", &numberOne, &numberTwo);

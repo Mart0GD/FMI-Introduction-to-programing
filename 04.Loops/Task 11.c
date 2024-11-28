@@ -1,5 +1,5 @@
 #include<stdio.h>
-
+#include<math.h>
 /*
 Ќапишете програма, ко€то прочита от конзолата ц€ло неотрицателно число n, след което принтира всички подмножества на дадено множество от n елемента.  ато елементите ще са числата от 1 до n.
 
@@ -17,37 +17,36 @@
 { 1 3 }
 { 2 3 }
 { 1 2 3 }
+
+{ 4 }
+{ 1 2 3 4 }
+{ 1 2 4 }
+{ 1 3 4 }
+{ 2 3 4 }
+{ 1 4 }
+{ 2 4 }
+{ 3 4 }
 */
-int main_11()
+int main() 
 {
-	int n;
-	scanf_s("%d", &n);
+    unsigned n = 0;
 
-	int step = 1;
-	puts("{ }");
-	for (int begining = 0; begining <= n; begining++)
-	{
-		//0
-		step = 1;
-		for (int currentFirstNumber = 0; currentFirstNumber < begining; currentFirstNumber++)
-		{
-			//0
-			printf("{ ");
-			for (int currentNumber = currentFirstNumber + 1; currentNumber <= begining; currentNumber += step)
-			{
-				printf("%d ", currentNumber);
-				/*for (int i = currentNumber; currentNumber < begining; currentNumber++)
-				{
-					printf("%d ", currentNumber);
-				}*/
+    scanf("%u", &n);
 
-			}
-			puts("}");
-			step++;
-			
-			
-		}
-	}
+    const unsigned k_subsetsCount = 1 << n;
+
+    for (unsigned subsetMask = 0; subsetMask < k_subsetsCount; ++subsetMask) {
+        printf("{ ");
+
+        for (unsigned bitIndex = 0; bitIndex < n; ++bitIndex) {
+            if (subsetMask & (1 << bitIndex)) {
+                unsigned subsetElement = bitIndex + 1;
+
+                printf("%d ", subsetElement);
+            }
+        }
+
+        printf("}\n");
 	
 	
 	return 0;

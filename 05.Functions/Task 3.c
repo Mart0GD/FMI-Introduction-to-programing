@@ -8,7 +8,7 @@ void printRealNumber(double number)
 	printf("%.2lf", number);
 }
 
-int main3()
+int main_3()
 {
 	double number;
 	scanf_s("%lf", &number);

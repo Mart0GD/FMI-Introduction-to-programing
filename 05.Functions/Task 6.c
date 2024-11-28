@@ -7,7 +7,7 @@
 
 int hasNeighboringIdenticalDigits(int number)
 {
-	int currentDigit = INT_MIN; // da sa neshto random prosto da ne se zasekat
+	int currentDigit = INT_MIN;
 	int previousDigit = INT_MAX;
 
 	while (number != 0)
@@ -26,7 +26,7 @@ int hasNeighboringIdenticalDigits(int number)
 	return 0;
 }
 
-int main6()
+int main_6()
 {
 	int start, end;
 	scanf_s("%d %d", &start, &end);

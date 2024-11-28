@@ -13,7 +13,7 @@ int isLeapYear(int year){
 	return (year % 4 == 0) && (year % 100 != 0) || year % 400 == 0;
 }
 
-int main4()
+int main_4()
 {
 	int number;
 	scanf_s("%d", &number);

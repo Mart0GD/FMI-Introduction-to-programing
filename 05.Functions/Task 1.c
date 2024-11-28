@@ -9,7 +9,7 @@ int absolute(int number) {
 	return number < 0 ? -number : number;
 }
 
-int main1()
+int main_1()
 {
 	int number;
 

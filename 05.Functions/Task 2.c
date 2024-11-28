@@ -10,7 +10,7 @@ char sign(int number) {
 	return isPositive ? "+" : "-";
 }
 
-int main2()
+int main_2()
 {
 	int number;
 	scanf_s("%d", &number);

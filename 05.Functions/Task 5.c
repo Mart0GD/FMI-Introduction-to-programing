@@ -19,7 +19,7 @@ int isPrime(int number)
 }
 
 
-int main5()
+int main_5()
 {
 	int number;
 	scanf_s("%d", &number);

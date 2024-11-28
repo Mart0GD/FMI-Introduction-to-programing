@@ -15,7 +15,7 @@ int count1BitsInNumber(int number)
 	return oneBitsSum;
 }
 
-int main()
+int main_7()
 {
 	int number;
 	scanf_s("%d", &number);

@@ -118,7 +118,7 @@ void interpretCommands(const unsigned char* commands, unsigned char* memory) {
 int isPrintable(const unsigned char charToValidate) {
 
 	const int BOTTOM_CHAR_PRINTABLE_INDEX = 32;
-	const int TOP_CHAR_PRINTABLE_INDEX = 162;
+	const int TOP_CHAR_PRINTABLE_INDEX = 126;
 
 	return charToValidate >= BOTTOM_CHAR_PRINTABLE_INDEX && charToValidate <= TOP_CHAR_PRINTABLE_INDEX;
 }
@@ -150,7 +150,7 @@ int validateNestedBraces(const unsigned char* commandsArr, const int arrSize) {
 	return commandsValid;
 }
 
-int main() {
+int main1() {
 
 	unsigned char memory[MEMORY_SIZE] = {0};
 	unsigned char commands[COMMANDS_CAP];

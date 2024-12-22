@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<math.h>
 
-
 #pragma warning(push)
 #pragma warning(disable: 4996)
 #define MAX_MATRIX_ROWS 100
@@ -20,7 +19,7 @@ int readMatrix(int matrix[][MAX_MATRIX_ROWS], const unsigned rows, const unsigne
 		}
 	}
 
-	return 1;
+	return 0;
 }
 
 void printMatrix(const int matrix[][MAX_MATRIX_ROWS], const unsigned rows, const unsigned cols) {
@@ -50,10 +49,6 @@ int hammingDistance(unsigned a, unsigned b) {
 
 	return distance;
 }
-
-/*
-в) В една правоъгълна матрица от цели числа без знак два реда ще наричаме K-подобни, ако сумата от разстоянията по Хеминг между всеки два съответни елемента от редовете не надминава числото K. Напише функция clearK с подходящ прототип, която получава като аргумент правоъгълна матрица от цели числа със знак, както и цяло число K, и премахва всички двойки редове, които са К-подобни. Последователността на оставащите редове се запазва. Вземете предвид факта, че един ред може да участва в повече от една двойка и тогава трябва да премахнете всички двойки, в които той участва!
-*/
 
 void deleteRow(int matrix[][MAX_MATRIX_ROWS], const unsigned index, const unsigned rows, const unsigned cols) {
 	if (index >= rows){
@@ -100,7 +95,6 @@ void sort(int arr[], const unsigned arrSize) {
 	}
 }
 
-
 int clearK(int matrix[][MAX_MATRIX_ROWS], unsigned* rowSize, unsigned colSize, const int k) {
 
 	int currentKSum = 0;
@@ -117,7 +111,7 @@ int clearK(int matrix[][MAX_MATRIX_ROWS], unsigned* rowSize, unsigned colSize, c
 				currentKSum += hammingDistance(matrix[y][x], matrix[currentY][x]);
 			}
 
-			if (currentKSum < k)
+			if (currentKSum <= k)
 			{
 				if(!isSeen(indexesToDelete, y, indexArrSize)) indexesToDelete[indexArrSize++] = y;
 				if(!isSeen(indexesToDelete, currentY, indexArrSize)) indexesToDelete[indexArrSize++] = currentY;
@@ -136,7 +130,7 @@ int clearK(int matrix[][MAX_MATRIX_ROWS], unsigned* rowSize, unsigned colSize, c
 	
 }
 
-int main() {
+int main2() {
 	unsigned matrixRows, matrixCols;
 
 	printf("Insert matrix rows: ");
@@ -158,7 +152,7 @@ int main() {
 	}
 
 	printf("Please input the k difference (max 32): ");
-	int k = 0;
+	unsigned k = 0;
 	if (scanf("%d", &k) != 1 || k > sizeof(unsigned) * 8){
 		puts("Invalid input!");
 		return -1;

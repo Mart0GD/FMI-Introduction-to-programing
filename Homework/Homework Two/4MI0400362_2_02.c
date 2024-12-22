@@ -19,7 +19,7 @@ int readMatrix(int matrix[][MAX_MATRIX_ROWS], const unsigned rows, const unsigne
 		}
 	}
 
-	return 0;
+	return 1;
 }
 
 void printMatrix(const int matrix[][MAX_MATRIX_ROWS], const unsigned rows, const unsigned cols) {
@@ -146,14 +146,14 @@ int main2() {
 	}
 
 	int matrix[MAX_MATRIX_COLS][MAX_MATRIX_ROWS];
-	if (readMatrix(matrix, matrixRows, matrixCols)) {
+	if (readMatrix(matrix, matrixRows, matrixCols) == -1) {
 		puts("Inavlid input!");
 		return -1;
 	}
 
 	printf("Please input the k difference (max 32): ");
 	unsigned k = 0;
-	if (scanf("%d", &k) != 1 || k > sizeof(unsigned) * 8){
+	if (scanf("%d", &k) != 1 || k > (matrixCols * (sizeof(unsigned) * 8))){
 		puts("Invalid input!");
 		return -1;
 	}

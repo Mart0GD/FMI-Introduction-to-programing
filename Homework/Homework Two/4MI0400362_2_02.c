@@ -130,7 +130,7 @@ int clearK(int matrix[][MAX_MATRIX_ROWS], unsigned* rowSize, unsigned colSize, c
 	
 }
 
-int main2() {
+int main() {
 	unsigned matrixRows, matrixCols;
 
 	printf("Insert matrix rows: ");

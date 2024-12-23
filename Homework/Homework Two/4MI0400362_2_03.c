@@ -118,7 +118,7 @@ void reverseNumbersInSortedIntervals(const unsigned soretdIntervals[], int numbe
 	}
 }
 
-int main3() {
+int main() {
 
 	unsigned numbersCount, intervalsCount;
 

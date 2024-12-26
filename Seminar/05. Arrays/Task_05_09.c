@@ -6,7 +6,7 @@
 */
 
 //n!/k!(n-k)!
-int main() {
+int main_05_09() {
 	int n = 0;
 	scanf_s("%d", &n);
 

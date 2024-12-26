@@ -10,7 +10,7 @@
 */
 
 //sufix
-int main()
+int main_03_16()
 {
 	int n, k;
 	scanf_s("%d %d", &n, &k);

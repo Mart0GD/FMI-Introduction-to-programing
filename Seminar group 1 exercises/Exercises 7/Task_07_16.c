@@ -4,7 +4,7 @@
 
 #pragma warning(push)
 #pragma warning(disable: 4996)
-//* а) Да се напише програма, която намира детерминантата на квадратна матрица от ред N.
+//* пїЅ) пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ N.
 
 void freeDet(int** det, const unsigned size) {
 	for (int i = 0; i < size; i++){
@@ -67,6 +67,7 @@ int solveDeterminant(int** det, unsigned size) {
 	{
 		newDet = copyDeterminant(det, size, 0, i);
 		sum += pow(-1, 2 + i) * det[0][i] * solveDeterminant(newDet, size - 1);
+		freeDet(newDet)
 	}
 	
 	return sum;
@@ -93,5 +94,6 @@ int main() {
 	}
 
 	printf("the result is %d", result);
+	freeDet(determinant);
 	return 0;
 }

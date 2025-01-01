@@ -152,7 +152,7 @@ char* findTrend(char* arr) {
 	return trend;
 }
 
-int main() {
+int main_08_07() {
 
 	char* sentence = readText();
 

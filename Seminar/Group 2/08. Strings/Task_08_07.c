@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include "Functions.h"
 
+#define WORDS_BUFFER 128
+#define LETTERS_BUFFER 64
 /*
 Задача 7: Да се напише функция, която приема низ и връща най-често срещаната дума в него (думите са разделени с произволен брой интервали, табулации и препинателни знаци). Функцията трябва да бъде case-insensitive (да третира главните и малки букви като еднакви).
 Вход: "Me? Why always me?", Изход: me
@@ -15,12 +17,53 @@ void freeCharMatrix(char** matrix, const unsigned size) {
 	free(matrix);
 }
 
+char** createMatrix(const int rows, const int cols) {
+	char** matrix = (char**)malloc(sizeof(char*) * rows);
+	if (!matrix)
+		return matrix;
+
+	for (int i = 0; i < rows; i++){
+		matrix[i] = (char*)malloc(sizeof(char) * cols);
+		if (!matrix[i]) {
+			freeCharMatrix(matrix, i);
+			return NULL;
+		}
+	}
+
+	return matrix;
+}
+
+void reallocateMatrix(char*** matrix, const int newSize) {
+	char** reallocated = (char**)realloc(*matrix, sizeof(char*) * newSize);
+
+	if (!reallocated) {
+		puts("Failed to reallocate!");
+		return;
+	}
+	*matrix = reallocated;
+}
+
 void toLower(char* chr) {
 	const char distance = 'a' - 'A';
 
 	if (*chr >= 'A' && *chr <= 'Z') {
 		*chr += distance;
 	}
+}
+
+char* copyValues(const char* fromArr) {
+	int len = strlen(fromArr);
+	char* newArr = (char*)malloc(sizeof(char) * (len + 1));
+	if (!newArr)
+		return newArr;
+
+	int iter = 0;
+	while (*fromArr != '\0') {
+		newArr[iter++] = *(fromArr++);
+	}
+	newArr[iter] = '\0';
+
+	return newArr;
 }
 
 int isWordChar(char chr) {
@@ -53,26 +96,14 @@ int containsWord(const char** matrix, const char* word, const unsigned size) {
 }
 
 char** unique(char** words, const unsigned size, int* uniqueSize) {
+	char** unique = createMatrix(size, LETTERS_BUFFER);
 
-	char** unique = (char**)malloc(sizeof(char*) * size);
-	if (!unique) return NULL;
 	for (int i = 0; i < size; i++){
-		unique[i] = (char*)malloc(sizeof(char) * size);
-		if (!unique[i]) {
-			freeCharMatrix(unique, i);
-			return NULL;
+		if (!containsWord(unique, words[i],*uniqueSize)){
+			unique[(*uniqueSize)++] = copyValues(words[i]);
 		}
 	}
 
-	int index = 0;
-	for (int i = 0; i < size; i++){
-		if (!containsWord(unique, words[i],index)){
-			free(unique[index]);
-			unique[index++] = strcpy(words[i], strlen(words[i]));
-		}
-	}
-
-	*uniqueSize = index;
 	return unique;
 }
 
@@ -91,68 +122,69 @@ char* findMostCommonWord(char** words, const unsigned size) {
 	}
 
 	char* trend = NULL;
+
+	int trendIndex = 0;
 	int mostConjunctions = -1;
 	for (int i = 0; i < uniqueSize; i++){
 		if (uniqueWordsCount[i] > mostConjunctions){
 			mostConjunctions = uniqueWordsCount[i];
-			trend = strcpy(uniqueWords[i], strlen(uniqueWords[i]));
+			trendIndex = i;
 		}
 	}
+
+	trend = copyValues(uniqueWords[trendIndex]);
 
 	freeCharMatrix(uniqueWords, uniqueSize);
 	free(uniqueWordsCount);
 	return trend;
 }
 
+char* skipIntervals(char* text) {
+	while (*text && !isWordChar(*text))
+		text++;
+	return text;
+}
+
+char* extractWord(char** start) {
+	char* word = (char*)malloc(sizeof(char) * WORDS_BUFFER);
+	if (!word)
+		return NULL;
+
+	int iter = 0;
+	while (*(*start) && isWordChar(*(*start))){
+		word[iter++] = (*((*start)++));
+	}
+
+	char* temp = (char*)realloc(word, sizeof(char) * (iter + 1));
+	if (!temp)
+		return word;
+	word = temp;
+
+	word[iter] = '\0';
+	return word;
+}
+
 char* findTrend(char* arr) {
 	int arrLen = strlen(arr);
-	char* temp = strcpy(arr, arrLen);
+	char* temp = copyValues(arr);
 	toLowerWord(temp);
 
 	int wordIndex = 0;
-	char** words = (char**)malloc(sizeof(char*) * arrLen);
-	if (!words) return NULL;
+	char** words = createMatrix(WORDS_BUFFER, LETTERS_BUFFER);
 
-	for (int i = 0; i < arrLen; i++){
-		words[i] = (char*)malloc(sizeof(char) * arrLen);
-		if (!words[i]) {
-			freeCharMatrix(words, i);
-			return NULL;
-		}
-	}
+	while (*temp && (*(temp = skipIntervals(temp)) != '\0')) 
+		words[wordIndex++] = extractWord(&temp);
 
-	char* trend = NULL;
-	int iter = 0;
-	int wordStarted = 0;
-	int startIndex = 0;
-	int endIndex = 0;
-	while (*temp != '\0'){
-		
-		if (!wordStarted && isWordChar(*temp)){
-			wordStarted = 1;
-			startIndex = iter;
-		}
-		else if (wordStarted && !isWordChar(*temp)) {
-			wordStarted = 0;
-			endIndex = iter;
+	reallocateMatrix(&words, wordIndex);
 
-			words[wordIndex++] = strsubstr(temp - iter, startIndex, endIndex);
-		}
+	char* trend = findMostCommonWord(words, wordIndex);
 
-		iter++;temp++;
-	}
-	if (wordIndex == 0 && arrLen > 0){
-		words[wordIndex++] = strsubstr(temp - iter, startIndex, iter);
-	}
-
-	trend = findMostCommonWord(words, wordIndex);
-
-	free(temp - iter);
-	freeCharMatrix(words, arrLen);
+	freeCharMatrix(words, wordIndex);
+	free(temp - arrLen);
 	return trend;
 }
 
-int main_08_07() {
+int main() {
 
 	char* sentence = readText();
 

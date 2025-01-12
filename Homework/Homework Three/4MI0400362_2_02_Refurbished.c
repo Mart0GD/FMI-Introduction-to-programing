@@ -8,6 +8,16 @@
 #pragma warning(push)
 #pragma warning(disable: 4996)
 
+void reallocate(char** arr, const int newSize) {
+	char* temp = (char*)realloc(*arr, sizeof(char) * (newSize + 1));
+	if (!temp) {
+		puts("reallocation failed!");
+		return;
+	}
+
+	*arr = temp;
+}
+
 char* readText() {
 
 	char* text = (char*)malloc(sizeof(char) * MAX_TEXT_SIZE);
@@ -24,9 +34,7 @@ char* readText() {
 		}
 	}
 
-	char* temp = (char*)realloc(text, sizeof(char) * (iter + 1));
-	if (!temp) return text;
-	text = temp;
+	reallocate(&text, iter);
 	text[iter] = '\0';
 
 	return text;
@@ -37,17 +45,6 @@ void freeCharMatrix(char** matrix, const int size) {
 		free(matrix[i]);
 	}
 	free(matrix);
-}
-
-void reallocate(char** arr, const int newSize) {
-	char* temp = (char*)realloc(*arr, sizeof(char) * (newSize + 1));
-	if (!temp) {
-		puts("reallocation failed!");
-		return;
-	}
-
-	*arr = temp;
-	(*arr)[newSize] = '\0';
 }
 
 int myStricmp(const char* str1, const char* str2) {
@@ -79,6 +76,24 @@ int isValidChar(const char chr) {
 		chr >= 'a' && chr <= 'z' ||
 		chr >= '0' && chr <= '9' ||
 		chr == '-';
+}
+
+char* toString(int number) {
+	int power = 0;
+	int temp = number;
+	while (temp /= 10)
+		power++;
+
+	char* str = (char*)malloc(sizeof(char) * (power + 1));
+	if (!str) return str;
+
+	for (int i = power; i >= 0; i--) {
+		str[i] = (number % 10) + '0';
+		number /= 10;
+	}
+	str[power + 1] = '\0';
+
+	return str;
 }
 
 char** createCharMatrix(const int rows, const int cols) {
@@ -118,6 +133,7 @@ char* extractWord(char** text) {
 	}
 
 	reallocate(&word, wordSize);
+	word[wordSize] = '\0';
 
 	return word;
 }
@@ -130,22 +146,32 @@ int isSeen(const char** matrix, const char* word, const int matrixSize) {
 
 }
 
-int getWordIndex(const char** words, const char* word, const int wordsSize) {
-	for (int i = 0; i < wordsSize; i++)
-		if (myStricmp(words[i], word) == 0) return i;
+char* toLower(const char* text) {
+	const int diff = 'a' - 'A';
 
-	return -1; // will never get here
+	char* toLower = (char*)malloc(sizeof(char) * (strlen(text) + 1));
+	if (!toLower) return NULL;
+
+	int index = 0;
+	while (*text) {
+		if (*text >= 'A' && *text <= 'Z') toLower[index++] = *text + diff;
+		else toLower[index++] = *text;
+		text++;
+	}
+	toLower[index] = '\0';
+
+	return toLower;
 }
 
 char** getUniqueWords(const char* text, int* uniqueWordsCount) {
 	char** uniqueWords = createCharMatrix(MAX_TEXT_SIZE, LETTERS_BUFFER);
 
 	char* word = NULL;
-	while ((getNextWord(&text), *text != '\0')) {
+	while ((getNextWord(&text), *text)) {
 		word = extractWord(&text);
 
 		if (!isSeen(uniqueWords, word, *uniqueWordsCount)) {
-			uniqueWords[(*uniqueWordsCount)++] = word;
+			uniqueWords[(*uniqueWordsCount)++] = toLower(word);
 		}
 	}
 
@@ -185,20 +211,6 @@ int* getWordsOccurances(const char* text, const char** uniqueWords, const int un
 	return wordsOccurances;
 }
 
-char* toLower(const char* text) {
-	char* toLower = (char*)malloc(sizeof(char) * strlen(text));
-
-	char* originalPtr = toLower;
-	while (*text) {
-		if (*text >= 'A' || *text <= 'Z') *(toLower++) = *text;
-		else *(toLower++) = *text;
-		text++;
-	}
-	toLower = '\0';
-
-	return originalPtr;
-}
-
 void sortWords(char** words, int* uniqueWordsOccurances, const int uniqueWordsCount) {
 	int swapped = 0;
 	int temp = 0;
@@ -224,59 +236,6 @@ void sortWords(char** words, int* uniqueWordsOccurances, const int uniqueWordsCo
 	}
 }
 
-char* toString(int number) {
-	int power = 0;
-	int temp = number;
-	while (temp /= 10)
-		power++;
-
-	char* str = (char*)malloc(sizeof(char) * (power + 1));
-	if (!str) return str;
-
-	for (int i = power; i >= 0; i--) {
-		str[i] = (number % 10) + '0';
-		number /= 10;
-	}
-	str[power + 1] = '\0';
-
-	return str;
-}
-
-void moveText(char* text, int offset) {
-	if (offset < 0) {
-		while (*text) {
-			*(text + offset) = *text;
-			text++;
-		}
-		*(text + offset) = '\0';
-	}
-	else { 
-		char* end = text + strlen(text) + offset;
-		*(end + 1) = '\0';
-
-		while (end >= text) {
-			*end = *(end - offset);
-			end--;
-		}
-
-	}
-}
-
-void replaceAll(char* text, const char* what, const char* with) {
-	int whatLen = (int)strlen(what);
-	int withLen = (int)strlen(with);
-	int diff = withLen - whatLen;
-
-	char* match = findMatch(text, what);
-	while (match) {
-		if (diff != 0) moveText(match + whatLen, diff);
-		strncpy(match, with, withLen);
-
-		text = match + withLen;
-		match = findMatch(text, what);
-	}
-}
-
 char* compressText(const char* text, char*** uniqueWords, int* uniqueWordsCount) {
 	*uniqueWords = getUniqueWords(text, uniqueWordsCount);
 
@@ -286,12 +245,29 @@ char* compressText(const char* text, char*** uniqueWords, int* uniqueWordsCount)
 	char* compressedText = (char*)malloc(sizeof(char) * strlen(text));
 	if (!compressedText) return compressedText;
 
-	strcpy(compressedText, text);
-	for (int i = 0; i < *uniqueWordsCount; i++) {
-		replaceAll(compressedText, (*uniqueWords)[i], toString(i));
+	char* word = NULL;
+	char* replacer = NULL;
+	int len = 0;
+	while (*text){
+		
+		if (!isValidChar(*text)) compressedText[len++] = *(text++);
+		else {
+			word = extractWord(&text);
+			for (int i = 0; i < *uniqueWordsCount; i++){
+				if (myStricmp((*uniqueWords)[i], word) == 0){
+					replacer = toString(i);
+
+					strcpy(compressedText + len, replacer);
+					len += strlen(toString(i));
+					break;
+				}
+			}
+		}
+
 	}
 
-	reallocate(&compressedText, strlen(compressedText));
+	reallocate(&compressedText, len);
+	compressedText[len] = '\0';
 
 	free(uniqueWordsOccurances);
 	return compressedText;
@@ -301,20 +277,20 @@ char* decompressText(const char* text, const char** compressedWords, const int c
 	char* decompressed = (char*)malloc(sizeof(char) * MAX_TEXT_SIZE);
 	if (!decompressed) return decompressed;
 
-	char* temp = decompressed;
+	int len = 0;
 	int index = 0;
 	while (*text) {
-		if (!isValidChar(*text)) *(temp++) = *(text++);
+		if (!isValidChar(*text)) decompressed[len++] = *(text++);
 		else {
 			index = atoi(extractWord(&text));
 
-			strcpy(temp, compressedWords[index]);
-			temp += strlen(compressedWords[index]);
+			strcpy(decompressed + len, compressedWords[index]);
+			len += strlen(compressedWords[index]);
 		}
 	}
-	*temp = '\0';
 
-	reallocate(&decompressed, strlen(decompressed));
+	reallocate(&decompressed, len);
+	decompressed[len] = '\0';
 	return decompressed;
 }
 
@@ -334,8 +310,8 @@ int main() {
 
 	char* decompressed = decompressText(compressed, uniqueWords, uniqueWordsCount);
 
-	printf("decompressed text --> %s\n", decompressed);
-	printf("Are input text and decompressed equal --> %d", myStricmp(text, decompressed) == 0 ? 1 : 0);
+	printf("\ndecompressed text --> %s\n", decompressed);
+	printf("\nAre input text and decompressed equal --> %s", myStricmp(text, decompressed) == 0 ? "yes" : "no");
 
 	free(text);
 	free(compressed);

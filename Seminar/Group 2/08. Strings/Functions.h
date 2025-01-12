@@ -33,6 +33,21 @@ static char* readText() {
 	return text;
 }
 
+static char* copyValues(const char* fromArr) {
+	int len = strlen(fromArr);
+	char* newArr = (char*)malloc(sizeof(char) * (len + 1));
+	if (!newArr)
+		return newArr;
+
+	int iter = 0;
+	while (*fromArr != '\0') {
+		newArr[iter++] = *(fromArr++);
+	}
+	newArr[iter] = '\0';
+
+	return newArr;
+}
+
 static unsigned strlen(const char* str) {
 	unsigned len = 0;
 	while (*str != '\0') {

@@ -51,21 +51,6 @@ void toLower(char* chr) {
 	}
 }
 
-char* copyValues(const char* fromArr) {
-	int len = strlen(fromArr);
-	char* newArr = (char*)malloc(sizeof(char) * (len + 1));
-	if (!newArr)
-		return newArr;
-
-	int iter = 0;
-	while (*fromArr != '\0') {
-		newArr[iter++] = *(fromArr++);
-	}
-	newArr[iter] = '\0';
-
-	return newArr;
-}
-
 int isWordChar(char chr) {
 	return
 		chr >= '0' && chr <= '9' ||
@@ -184,7 +169,7 @@ char* findTrend(char* arr) {
 	return trend;
 }
 
-int main() {
+int main_08_07() {
 
 	char* sentence = readText();
 

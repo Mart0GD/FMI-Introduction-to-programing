@@ -294,7 +294,7 @@ char* decompressText(const char* text, const char** compressedWords, const int c
 	return decompressed;
 }
 
-int main() {
+int main_02() {
 	printf("Enter text: ");
 	char* text = readText();
 

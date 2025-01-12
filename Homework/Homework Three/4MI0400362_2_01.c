@@ -132,7 +132,7 @@ void sortColumsAscn(int** matrix, const unsigned rows, const unsigned cols) {
 	int* columnsSums = (int*)malloc(sizeof(int) * cols);
 	if (!columnsSums) {
 		puts(MEMORY_MESSAGE);
-		exit(EXIT_FAILURE);
+		exit(-1);
 	}
 
 	getColumsSums(matrix, columnsSums, rows, cols);
@@ -149,7 +149,7 @@ void printMatrix(const int** matrix, const unsigned rows, const unsigned cols) {
 	}
 }
 
-int main_01() {
+int main() {
 
 	unsigned rows, cols;
 
@@ -163,7 +163,7 @@ int main_01() {
 	int** table = createMatrix(rows, cols);
 	if (!table) { return -1; }
 
-	puts("Insert matrix values in hexadecimal format: ");
+	puts("Insert matrix values in hexadecimal format: \n");
 	readInput(table, rows, cols);
 
 	deleteEvenComposedRows(&table, &rows, cols);
